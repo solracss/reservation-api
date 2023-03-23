@@ -8,7 +8,9 @@ namespace ReservationAPI.Profiles
     {
         public MappingProfiles()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>()
+                .ForMember(dto => dto.DateOfBirth, dob =>
+                dob.MapFrom(u => u.DateOfBirth.ToString("yyyy-MM-dd")));
             CreateMap<Reservation, ReservationDto>();
         }
     }
