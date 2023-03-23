@@ -35,6 +35,7 @@ namespace ReservationAPI
                     PasswordHash = "AQAAAAIAAYagAAAAEAXmwNmLn5w5KQnjOUqzvfGEPtQ2M8/SUPLQEAhg/petZIlcmnMuY9+/pbWnJlhISw==",
                     FirstName = "FirstUser",
                     LastName = "FirstUserLN",
+                    DateOfBirth = new DateTime(2000, 1 ,1),
                     Reservations = new List<Reservation>()
                     {
                         new Reservation()
@@ -52,6 +53,7 @@ namespace ReservationAPI
                     PasswordHash ="AQAAAAIAAYagAAAAEIbPBs9KEIfrH67Qz7fDk+MyebfGVkSak+1pLYW5CII4S1D6K2Xq1K/TUezi+dTA0g==",
                     FirstName = "SecondUser",
                     LastName = "SecondUserLN",
+                    DateOfBirth = new DateTime(2010, 1 ,1),
                     Reservations = new List<Reservation>()
                     {
                         new Reservation()

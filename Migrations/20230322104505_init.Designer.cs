@@ -55,7 +55,7 @@ namespace ReservationAPI.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Domain.User", b =>
+            modelBuilder.Entity("ReservationAPI.Domain.UserDto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,16 +89,16 @@ namespace ReservationAPI.Migrations
 
             modelBuilder.Entity("ReservationAPI.Domain.Reservation", b =>
                 {
-                    b.HasOne("ReservationAPI.Domain.User", "User")
+                    b.HasOne("ReservationAPI.Domain.UserDto", "UserDto")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserDto");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Domain.User", b =>
+            modelBuilder.Entity("ReservationAPI.Domain.UserDto", b =>
                 {
                     b.Navigation("Reservations");
                 });
