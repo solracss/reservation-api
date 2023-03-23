@@ -26,7 +26,7 @@ namespace ReservationAPI.Services
 
             if (user == null)
             {
-                throw new NotFoundException($"UserDto with id :{id} not found");
+                throw new NotFoundException($"User with id :{id} not found");
             }
             var userDto = mapper.Map<UserDto>(user);
             return userDto;
@@ -38,6 +38,11 @@ namespace ReservationAPI.Services
                 .Users
                 .Include(x => x.Reservations)
                 .ToListAsync();
+
+            if (!users.Any())
+            {
+                throw new NotFoundException("No users in database");
+            }
 
             var userDtos = mapper.Map<List<UserDto>>(users);
 
