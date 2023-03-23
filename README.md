@@ -37,6 +37,7 @@ by default is should be
 ### Endpoints
 
 The following endpoints are available in the API:
+
 User Endpoints
 
     GET /api/users - Get all users.
