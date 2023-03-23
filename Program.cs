@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
+using ReservationAPI.Services;
 
 namespace ReservationAPI
 {
@@ -16,6 +17,7 @@ namespace ReservationAPI
             builder.Services.AddDbContext<DataContext>(
                 x => x.UseNpgsql(connectionString));
             builder.Services.AddScoped<DataSeeder>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
