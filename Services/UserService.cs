@@ -1,22 +1,47 @@
-﻿using ReservationAPI.Data;
-using ReservationAPI.Domain;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using ReservationAPI.Data;
+using ReservationAPI.Dtos;
+using ReservationAPI.Exceptions;
 
 namespace ReservationAPI.Services
 {
     public class UserService : IUserService
     {
         private readonly DataContext dataContext;
+        private readonly IMapper mapper;
 
-        public UserService(DataContext dataContext)
+        public UserService(DataContext dataContext, IMapper mapper)
         {
             this.dataContext = dataContext;
+            this.mapper = mapper;
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<UserDto> GetUserAsync(int id)
         {
-            var users = dataContext
-                .Users.ToList();
-            return users;
+            var user = await dataContext
+                .Users
+                .Include(x => x.Reservations)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                throw new NotFoundException($"UserDto with id :{id} not found");
+            }
+            var userDto = mapper.Map<UserDto>(user);
+            return userDto;
+        }
+
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
+        {
+            var users = await dataContext
+                .Users
+                .Include(x => x.Reservations)
+                .ToListAsync();
+
+            var userDtos = mapper.Map<List<UserDto>>(users);
+
+            return userDtos;
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using ReservationAPI.Domain;
+﻿using ReservationAPI.Dtos;
 
 namespace ReservationAPI.Services
 {
     public interface IUserService
     {
-        IEnumerable<User> GetUsers();
+        Task<IEnumerable<UserDto>> GetAllUsersAsync();
+
+        Task<UserDto> GetUserAsync(int id);
     }
 }
