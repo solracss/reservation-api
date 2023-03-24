@@ -26,7 +26,7 @@ API allows to:
 ### Database schema
 
 <p align="center">
- <img align ="center "src="https://i.imgur.com/JPsyHgD.png" alt="db schema">
+ <img align ="center "src="https://i.imgur.com/8DcBQEt.png" alt="db schema">
 </p>
 <br>
 Once you have the API running, you can interact with it using a tool like Postman or cURL. 
