@@ -1,6 +1,7 @@
-using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
+using ReservationAPI.Domain;
 using ReservationAPI.Middleware;
 using ReservationAPI.Services;
 using System.Reflection;
@@ -23,6 +24,8 @@ namespace ReservationAPI
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddScoped<ErrorHandlindMiddleware>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
