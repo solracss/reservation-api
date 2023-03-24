@@ -22,7 +22,24 @@ namespace ReservationAPI
                     dataContext.Users.AddRange(users);
                     dataContext.SaveChanges();
                 }
+                if (!dataContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    dataContext.Roles.AddRange(roles);
+                    dataContext.SaveChanges();
+                }
             }
+        }
+
+        private IEnumerable<Role> GetRoles()
+        {
+            var roles = new List<Role>()
+            {
+                new Role(){ Name = "User"},
+                new Role(){ Name = "Admin"}
+            };
+
+            return roles;
         }
 
         private IEnumerable<User> GetUsers()

@@ -9,5 +9,6 @@
         public string LastName { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int RoleId { get; set; }
     }
 }

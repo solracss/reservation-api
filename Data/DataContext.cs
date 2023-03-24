@@ -11,6 +11,7 @@ namespace ReservationAPI.Data
 
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,10 @@ namespace ReservationAPI.Data
                 .Property(x => x.LastName)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            modelBuilder.Entity<Role>()
+                .Property(x => x.Name)
+                .IsRequired();
         }
     }
 }
