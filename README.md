@@ -1,10 +1,10 @@
 # Reservation api
 
-This is a simple .NET Core API that allows users to make and manage reservations. The API utilizes two tables in the database, user and reservation.
+This is a simple .NET Core API that allows users to make and manage reservations.
 
 API allows to:
 
-- register user
+- register new user
 - authenticate user using jwt token
 - authorize user over 18 y.o. to make CRUD operations
 - admin user can view all users and reservations
@@ -55,3 +55,11 @@ Reservation Endpoints
     POST /api/reservations - Create a new reservation.
     PUT /api/reservations/{id} - Update reservation by ID.
     DELETE /api/reservations/{id} - Delete reservation by ID.
+
+## Tech Stack
+
+- [.NetCore 6.0](https://learn.microsoft.com/en-us/dotnet/core/introduction)
+- [Auto Mapper](https://automapper.org/)
+- [Entity FrameworkCore](https://learn.microsoft.com/en-us/ef/core/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Fluent Validation](https://docs.fluentvalidation.net/en/latest/)
