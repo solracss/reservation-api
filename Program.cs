@@ -5,6 +5,10 @@ using ReservationAPI.Domain;
 using ReservationAPI.Middleware;
 using ReservationAPI.Services;
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using ReservationAPI.Dtos;
+using ReservationAPI.Validators;
 
 namespace ReservationAPI
 {
@@ -26,6 +30,9 @@ namespace ReservationAPI
             builder.Services.AddScoped<ErrorHandlindMiddleware>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+            builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
 
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
