@@ -26,7 +26,7 @@ namespace ReservationAPI.Services
 
             if (user == null)
             {
-                throw new NotFoundException($"User with id :{id} not found");
+                throw new NotFoundException($"User with id {id} not found");
             }
             var userDto = mapper.Map<UserDto>(user);
             return userDto;

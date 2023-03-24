@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
+using ReservationAPI.Middleware;
 using ReservationAPI.Services;
 using System.Reflection;
 
@@ -21,6 +22,7 @@ namespace ReservationAPI
             builder.Services.AddScoped<DataSeeder>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            builder.Services.AddScoped<ErrorHandlindMiddleware>();
 
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -36,6 +38,8 @@ namespace ReservationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseErrorHandlindMiddleware();
 
             app.UseHttpsRedirection();
 
