@@ -1,14 +1,6 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using ReservationAPI.Data;
-using ReservationAPI.Domain;
-using ReservationAPI.Middleware;
-using ReservationAPI.Services;
-using System.Reflection;
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using ReservationAPI.Dtos;
-using ReservationAPI.Validators;
+using ReservationAPI.Extensions;
+using ReservationAPI.Middleware;
 
 namespace ReservationAPI
 {
@@ -21,16 +13,13 @@ namespace ReservationAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
-            builder.Services.AddDbContext<DataContext>(
-                x => x.UseNpgsql(connectionString));
-            builder.Services.AddScoped<DataSeeder>();
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            builder.Services.AddScoped<ErrorHandlindMiddleware>();
-            builder.Services.AddScoped<IAccountService, AccountService>();
-            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-            builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+            builder.Services.RegisterDatabase(builder
+                .Configuration["ConnectionStrings:DefaultConnection"]);
+            builder.Services.RegisterServices();
+            builder.Services.RegisterAutoMapper();
+            builder.Services.RegisterMiddlewares();
+            builder.Services.RegisterPasswordHasher();
+            builder.Services.RegisterValidators();
             builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
