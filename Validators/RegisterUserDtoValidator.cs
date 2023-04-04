@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
 using ReservationAPI.Dtos;

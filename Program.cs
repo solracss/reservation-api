@@ -10,16 +10,15 @@ namespace ReservationAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Authentication"));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.RegisterDatabase(builder
                 .Configuration["ConnectionStrings:DefaultConnection"]);
             builder.Services.RegisterServices();
-            builder.Services.RegisterAutoMapper();
-            builder.Services.RegisterMiddlewares();
-            builder.Services.RegisterPasswordHasher();
-            builder.Services.RegisterValidators();
+            builder.Services.AddInfrastructure();
+
             builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
@@ -34,6 +33,8 @@ namespace ReservationAPI
 
             app.ConfigureSwagger();
             app.UseErrorHandlindMiddleware();
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

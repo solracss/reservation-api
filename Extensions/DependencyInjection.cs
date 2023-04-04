@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace ReservationAPI.Extensions;
 
-public static class ServiceExtensions
+public static class DependencyInjection
 {
     public static void RegisterDatabase(this IServiceCollection services, string connectionString)
     {
@@ -26,23 +26,12 @@ public static class ServiceExtensions
         services.AddScoped<IAccountService, AccountService>();
     }
 
-    public static void RegisterAutoMapper(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-    }
-
-    public static void RegisterMiddlewares(this IServiceCollection services)
-    {
         services.AddScoped<ErrorHandlindMiddleware>();
-    }
-
-    public static void RegisterPasswordHasher(this IServiceCollection services)
-    {
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-    }
-
-    public static void RegisterValidators(this IServiceCollection services)
-    {
         services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+        return services;
     }
 }
