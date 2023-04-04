@@ -11,7 +11,12 @@ namespace ReservationAPI.Profiles
             CreateMap<User, UserDto>()
                 .ForMember(dto => dto.DateOfBirth, dob =>
                 dob.MapFrom(u => u.DateOfBirth.ToString("yyyy-MM-dd")));
-            CreateMap<Reservation, ReservationDto>();
+
+            CreateMap<Reservation, ReservationDto>()
+                .ForMember(dto => dto.StartDate, startDate =>
+                startDate.MapFrom(r => r.StartDate.ToString("yyyy-MM-dd HH:mm")))
+                .ForMember(dto => dto.EndDate, endDate =>
+                endDate.MapFrom(r => r.EndDate.ToString("yyyy-MM-dd HH:mm")));
         }
     }
 }
