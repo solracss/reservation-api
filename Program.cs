@@ -32,18 +32,10 @@ namespace ReservationAPI
                 seeder.SeedDataContext();
             }
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
+            app.ConfigureSwagger();
             app.UseErrorHandlindMiddleware();
-
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
 
             app.Run();
