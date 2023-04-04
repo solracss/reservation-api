@@ -22,5 +22,12 @@ namespace ReservationAPI.Controllers
             await accountService.RegisterUserAsync(dto);
             return Ok();
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] LoginDto dto)
+        {
+            string token = await accountService.GenerateToken(dto);
+            return Ok(token);
+        }
     }
 }
