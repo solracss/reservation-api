@@ -8,8 +8,6 @@ namespace ReservationAPI.Validators
 {
     public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {
-        public IList<User> Pets { get; set; } = new List<User>();
-
         public RegisterUserDtoValidator(DataContext dataContext)
         {
             RuleFor(x => x.Email)
