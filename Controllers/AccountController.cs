@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using ReservationAPI.Services;
 

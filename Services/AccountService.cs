@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using ReservationAPI.Authentication;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace ReservationAPI.Services
 {
