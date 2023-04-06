@@ -16,20 +16,26 @@ namespace ReservationAPI.Services
     {
         private readonly DataContext dataContext;
         private readonly IPasswordHasher<User> passwordHasher;
-        private readonly AuthenticationSettings authenticationSettings;
+        private readonly IJwtTokenGenerator jwtTokenGenerator;
 
-        public AccountService(DataContext dataContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public AccountService(DataContext dataContext, IPasswordHasher<User> passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
         {
             this.dataContext = dataContext;
             this.passwordHasher = passwordHasher;
-            this.authenticationSettings = authenticationSettings;
+            this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<string> GenerateToken(LoginDto dto)
+        public async Task<string> Login(LoginDto dto)
+        {
+            var user = await VerifyIfUserExist(dto);
+            return jwtTokenGenerator.GenerateToken(user);
+        }
+
+        private async Task<User> VerifyIfUserExist(LoginDto dto)
         {
             var user = await dataContext.Users
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == dto.Email);
+                 .Include(u => u.Role)
+                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if (user == null)
             {
@@ -42,27 +48,7 @@ namespace ReservationAPI.Services
                 throw new BadRequestException("Invalid username or password");
             }
 
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.Role, $"{user.Role.Name}"),
-                new Claim("DateOfBirth", user.DateOfBirth.ToString("yyyy-MM-dd"))
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey));
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(authenticationSettings.JwtExpireDays);
-
-            var token = new JwtSecurityToken(authenticationSettings.JwtIssuer,
-                authenticationSettings.JwtIssuer,
-                claims,
-                expires: expires,
-                signingCredentials: cred
-                );
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+            return user;
         }
 
         public async Task RegisterUserAsync(RegisterUserDto dto)
