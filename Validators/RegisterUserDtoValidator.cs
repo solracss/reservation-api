@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using ReservationAPI.Data;
-using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using System.Text.RegularExpressions;
 

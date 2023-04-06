@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<ErrorHandlindMiddleware>();
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+        services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
         return services;
     }
 }
