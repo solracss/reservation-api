@@ -10,12 +10,12 @@ namespace ReservationAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Authentication"));
+            builder.Services.ConfigureAuthentication(builder.Configuration);
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.RegisterDatabase(builder
-                .Configuration["ConnectionStrings:DefaultConnection"]);
+                .Configuration);
             builder.Services.RegisterServices();
             builder.Services.AddInfrastructure();
 

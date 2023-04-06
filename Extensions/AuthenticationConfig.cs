@@ -6,11 +6,11 @@ namespace ReservationAPI.Extensions
 {
     public static class AuthenticationConfig
     {
-        public static void ConfigureAuthentication(this IServiceCollection services, IConfigurationSection configurationSection)
+        public static void ConfigureAuthentication(this IServiceCollection services, ConfigurationManager configuration)
         {
             var autenticationSettings = new AuthenticationSettings();
 
-            configurationSection.Bind(autenticationSettings);
+            configuration.GetSection(AuthenticationSettings.SectionName).Bind(autenticationSettings);
 
             services.AddSingleton(autenticationSettings);
 

@@ -13,10 +13,10 @@ namespace ReservationAPI.Extensions;
 
 public static class DependencyInjection
 {
-    public static void RegisterDatabase(this IServiceCollection services, string connectionString)
+    public static void RegisterDatabase(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddDbContext<DataContext>(
-                x => x.UseNpgsql(connectionString));
+                x => x.UseNpgsql(configuration["ConnectionStrings:DefaultConnection"]));
     }
 
     public static void RegisterServices(this IServiceCollection services)
