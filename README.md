@@ -14,7 +14,7 @@ API allows to:
 ## Prerequisites
 
 - Visual Studio 2022
-- .NET Core SDK
+- .NET Core 6.0
 - PostgreSQL database
 
 ## Running project
