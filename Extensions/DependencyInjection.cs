@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<DataSeeder>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
     }
 
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
