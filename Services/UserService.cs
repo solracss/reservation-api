@@ -23,12 +23,8 @@ namespace ReservationAPI.Services
             var user = await dataContext
                 .Users
                 .Include(x => x.Reservations)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (user == null)
-            {
-                throw new NotFoundException($"User with id {id} not found");
-            }
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new NotFoundException($"User with id {id} not found");
             var userDto = mapper.Map<UserDto>(user);
             return userDto;
         }
@@ -45,14 +41,10 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = users.Count();
-
             var usersResultForPage = await PagedResult<User>.GetItemsForPage(users, queryParameters);
-
             var userDtos = mapper.Map<List<UserDto>>(usersResultForPage);
 
-            var pagedResult = new PagedResult<UserDto>(userDtos, totalItemsCount, queryParameters.PageSize, queryParameters.PageNumber);
-
-            return pagedResult;
+            return new PagedResult<UserDto>(userDtos, totalItemsCount, queryParameters.PageSize, queryParameters.PageNumber);
         }
     }
 }
