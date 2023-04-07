@@ -33,24 +33,26 @@ namespace ReservationAPI.Services
             return userDto;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllUsersAsync(QueryParameters queryParameters)
+        public async Task<PagedResult<UserDto>> GetAllUsersAsync(QueryParameters queryParameters)
         {
-            var users = await dataContext
+            var users = dataContext
                 .Users
-                .Include(x => x.Reservations)
-                .OrderBy(x => x.Id)
-                .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
-                .Take(queryParameters.PageSize)
-                .ToListAsync();
+                .Include(x => x.Reservations);
 
             if (!users.Any())
             {
                 throw new NotFoundException("No users in database");
             }
 
-            var userDtos = mapper.Map<List<UserDto>>(users);
+            var totalItemsCount = users.Count();
 
-            return userDtos;
+            var usersResultForPage = await PagedResult<User>.GetItemsForPage(users, queryParameters);
+
+            var userDtos = mapper.Map<List<UserDto>>(usersResultForPage);
+
+            var pagedResult = new PagedResult<UserDto>(userDtos, totalItemsCount, queryParameters.PageSize, queryParameters.PageNumber);
+
+            return pagedResult;
         }
     }
 }
