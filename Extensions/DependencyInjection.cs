@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
@@ -13,18 +14,22 @@ namespace ReservationAPI.Extensions;
 
 public static class DependencyInjection
 {
-    public static void RegisterDatabase(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection RegisterDatabase(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddDbContext<DataContext>(
                 x => x.UseNpgsql(configuration["ConnectionStrings:DefaultConnection"]));
+
+        return services;
     }
 
-    public static void RegisterServices(this IServiceCollection services)
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         services.AddScoped<DataSeeder>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+        return services;
     }
 
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
@@ -34,6 +39,9 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
         services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+        services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+
         return services;
     }
 }

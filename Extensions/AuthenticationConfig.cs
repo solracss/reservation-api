@@ -6,7 +6,7 @@ namespace ReservationAPI.Extensions
 {
     public static class AuthenticationConfig
     {
-        public static void ConfigureAuthentication(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, ConfigurationManager configuration)
         {
             var autenticationSettings = new AuthenticationSettings();
 
@@ -30,6 +30,8 @@ namespace ReservationAPI.Extensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(autenticationSettings.JwtKey))
                 };
             });
+
+            return services;
         }
     }
 }

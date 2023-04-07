@@ -5,7 +5,7 @@ namespace ReservationAPI.Extensions
 {
     public static class ApiVersionConfig
     {
-        public static void ApiVersionConfiguration(this IServiceCollection services)
+        public static IServiceCollection ApiVersionConfiguration(this IServiceCollection services)
         {
             services.AddApiVersioning(option =>
             {
@@ -17,6 +17,14 @@ namespace ReservationAPI.Extensions
                     new HeaderApiVersionReader("x-api-version"),
                     new MediaTypeApiVersionReader("x-api-version"));
             });
+
+            services.AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            });
+
+            return services;
         }
     }
 }
