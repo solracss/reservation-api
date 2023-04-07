@@ -18,9 +18,9 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers([FromQuery] QueryParameters queryParameters)
         {
-            var usersDtos = await userService.GetAllUsersAsync();
+            var usersDtos = await userService.GetAllUsersAsync(queryParameters);
             return Ok(usersDtos);
         }
 

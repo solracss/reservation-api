@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
+using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
 
@@ -32,11 +33,14 @@ namespace ReservationAPI.Services
             return userDto;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync(QueryParameters queryParameters)
         {
             var users = await dataContext
                 .Users
                 .Include(x => x.Reservations)
+                .OrderBy(x => x.Id)
+                .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
+                .Take(queryParameters.PageSize)
                 .ToListAsync();
 
             if (!users.Any())
