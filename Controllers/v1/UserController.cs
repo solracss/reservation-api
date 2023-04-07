@@ -2,7 +2,8 @@
 using ReservationAPI.Domain;
 using ReservationAPI.Services;
 
-namespace ReservationAPI.Controllers.V1
+namespace ReservationAPI.Controllers.v1
+
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/users")]
