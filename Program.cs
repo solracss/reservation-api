@@ -22,6 +22,8 @@ namespace ReservationAPI
             builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
+            builder.Services.ApiVersionConfiguration();
+
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
