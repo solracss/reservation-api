@@ -51,7 +51,7 @@ namespace ReservationAPI.Extensions
         {
             var info = new OpenApiInfo()
             {
-                Title = ".NET Core (.NET 6) Web API",
+                Title = "Reservation API",
                 Version = desc.ApiVersion.ToString()
             };
 
