@@ -1,6 +1,6 @@
-# Reservation api
+![](https://img.shields.io/badge/Status-InProgress-red) ![](https://img.shields.io/badge/version-1.0-Green)<br /><br />
 
-![](https://img.shields.io/badge/Build-InProgress-red?logo=csharp)<br /><br />
+# Reservation api
 
 This is a simple .NET Core API that allows users to make and manage reservations.
 
