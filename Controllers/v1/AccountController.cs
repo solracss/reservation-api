@@ -2,10 +2,11 @@
 using ReservationAPI.Dtos;
 using ReservationAPI.Services;
 
-namespace ReservationAPI.Controllers
+namespace ReservationAPI.Controllers.v1
 {
     [ApiController]
-    [Route("api/account")]
+    [Route("api/v{version:apiVersion}/account")]
+    [ApiVersion("1.0")]
     public class AccountController : Controller
     {
         private readonly IAccountService accountService;
