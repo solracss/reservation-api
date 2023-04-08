@@ -22,7 +22,11 @@ namespace ReservationAPI.Services
         {
             var reservations = dataContext
                 .Reservations
-                .Include(r => r.User);
+                .Include(r => r.User)
+                .Where(r => queryParameters.SearchString == null
+                || (r.UserId.ToString().Equals(queryParameters.SearchString)));
+
+            ;
 
             if (!reservations.Any())
             {
