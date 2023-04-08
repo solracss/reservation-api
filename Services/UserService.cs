@@ -4,6 +4,7 @@ using ReservationAPI.Data;
 using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
+using System.Linq;
 
 namespace ReservationAPI.Services
 {
@@ -33,7 +34,12 @@ namespace ReservationAPI.Services
         {
             var users = dataContext
                 .Users
-                .Include(x => x.Reservations);
+                .Include(u => u.Reservations)
+                .Where(u => queryParameters.SearchString == null
+                || (u.FirstName.ToLower().Contains(queryParameters.SearchString.ToLower()))
+                || (u.LastName.ToLower().Contains(queryParameters.SearchString.ToLower()))
+                || (u.Email.ToLower().Contains(queryParameters.SearchString.ToLower()))
+                );
 
             if (!users.Any())
             {
