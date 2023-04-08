@@ -4,12 +4,14 @@
 
 This is a simple .NET Core API that allows users to make and manage reservations.
 
-API allows to:
+Main features:
 
 - register new user
 - authenticate user using jwt token
 - authorize user over 18 y.o. to make CRUD operations
 - admin user can view all users and reservations
+- all records are presented as paginated results
+- records can be filtered (enter a string to search for in the email, firstName, lastName)
 
 ## Prerequisites
 
