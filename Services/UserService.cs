@@ -4,7 +4,6 @@ using ReservationAPI.Data;
 using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
-using System.Linq;
 
 namespace ReservationAPI.Services
 {

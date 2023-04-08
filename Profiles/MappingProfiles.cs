@@ -16,7 +16,14 @@ namespace ReservationAPI.Profiles
                 .ForMember(dto => dto.StartDate, startDate =>
                 startDate.MapFrom(r => r.StartDate.ToString("yyyy-MM-dd HH:mm")))
                 .ForMember(dto => dto.EndDate, endDate =>
-                endDate.MapFrom(r => r.EndDate.ToString("yyyy-MM-dd HH:mm")));
+                endDate.MapFrom(r => r.EndDate.ToString("yyyy-MM-dd HH:mm")))
+                .ForMember(dto => dto.UserEmail, email =>
+                email.MapFrom(u => u.User.Email))
+                .ForMember(dto => dto.UserFirstName, email =>
+                email.MapFrom(u => u.User.FirstName))
+                .ForMember(dto => dto.UserLastName, email =>
+                email.MapFrom(u => u.User.LastName))
+            ;
         }
     }
 }
