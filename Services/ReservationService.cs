@@ -20,13 +20,15 @@ namespace ReservationAPI.Services
 
         public async Task<PagedResult<ReservationDto>> GetAllReservations(QueryParameters queryParameters)
         {
+            _ = DateTime.TryParse(queryParameters.SearchString, out DateTime searchDate);
+
             var reservations = dataContext
                 .Reservations
                 .Include(r => r.User)
                 .Where(r => queryParameters.SearchString == null
-                || (r.UserId.ToString().Equals(queryParameters.SearchString)));
-
-            ;
+                || (r.UserId.ToString().Equals
+                    (queryParameters.SearchString))
+                || (r.StartDate.Date == searchDate.Date));
 
             if (!reservations.Any())
             {
