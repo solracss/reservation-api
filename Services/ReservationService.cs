@@ -20,15 +20,14 @@ namespace ReservationAPI.Services
 
         public async Task<PagedResult<ReservationDto>> GetAllReservations(QueryParameters queryParameters)
         {
-            _ = DateTime.TryParse(queryParameters.SearchString, out DateTime searchDate);
-
-            var reservations = dataContext
-                .Reservations
-                .Include(r => r.User)
-                .Where(r => queryParameters.SearchString == null
-                || (r.UserId.ToString().Equals
-                    (queryParameters.SearchString))
-                || (r.StartDate.Date == searchDate.Date));
+            var reservations = from r in dataContext.Reservations
+                   .Include(r => r.User)
+                               where (string.IsNullOrEmpty(queryParameters.SearchString)
+                                            || r.UserId.ToString() == queryParameters.SearchString
+                                            || r.User.Email.Contains(queryParameters.SearchString))
+                                      && (queryParameters.StartDateParam == new DateTime(0001, 01, 01)
+                                            || r.StartDate >= queryParameters.StartDateParam)
+                               select r;
 
             if (!reservations.Any())
             {
@@ -36,10 +35,15 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = reservations.Count();
-            var reservationsResultForPage = await PagedResult<Reservation>.GetItemsForPage(reservations, queryParameters);
+            var reservationsResultForPage = await PagedResult<Reservation>
+                .GetItemsForPage(reservations, queryParameters);
             var reservationDto = mapper.Map<List<ReservationDto>>(reservationsResultForPage);
 
-            return new PagedResult<ReservationDto>(reservationDto, totalItemsCount, queryParameters.PageSize, queryParameters.PageNumber);
+            return new PagedResult<ReservationDto>(
+                reservationDto,
+                totalItemsCount,
+                queryParameters.PageSize,
+                queryParameters.PageNumber);
         }
     }
 }
