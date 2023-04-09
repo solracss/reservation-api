@@ -18,7 +18,7 @@ namespace ReservationAPI.Services
             this.mapper = mapper;
         }
 
-        public async Task<PagedResult<ReservationDto>> GetAllReservations(QueryParameters queryParameters)
+        public async Task<PagedResult<ReservationDto>> GetAllReservationsAsync(QueryParameters queryParameters)
         {
             var reservations = from r in dataContext.Reservations
                    .Include(r => r.User)
@@ -44,6 +44,18 @@ namespace ReservationAPI.Services
                 totalItemsCount,
                 queryParameters.PageSize,
                 queryParameters.PageNumber);
+        }
+
+        public async Task<ReservationDto> GetReservationAsync(int id)
+        {
+            var reservation = await dataContext
+                .Reservations
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.Id == id)
+                ?? throw new NotFoundException($"Resrvation with id {id} not found");
+
+            var reservationDto = mapper.Map<ReservationDto>(reservation);
+            return reservationDto;
         }
     }
 }

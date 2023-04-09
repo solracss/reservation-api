@@ -20,8 +20,15 @@ namespace ReservationAPI.Controllers.v1
         [HttpGet]
         public async Task<ActionResult<PagedResult<ReservationDto>>> GetReservations([FromQuery] QueryParameters queryParameters)
         {
-            var reservations = await reservationService.GetAllReservations(queryParameters);
+            var reservations = await reservationService.GetAllReservationsAsync(queryParameters);
             return Ok(reservations);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ReservationDto>> GetReservation(int id)
+        {
+            var reservation = await reservationService.GetReservationAsync(id);
+            return Ok(reservation);
         }
     }
 }

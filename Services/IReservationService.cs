@@ -5,6 +5,8 @@ namespace ReservationAPI.Services
 {
     public interface IReservationService
     {
-        Task<PagedResult<ReservationDto>> GetAllReservations(QueryParameters queryParameters);
+        Task<PagedResult<ReservationDto>> GetAllReservationsAsync(QueryParameters queryParameters);
+
+        Task<ReservationDto> GetReservationAsync(int id);
     }
 }
