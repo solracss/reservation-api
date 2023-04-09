@@ -10,8 +10,10 @@ Main features:
 - authenticate user using jwt token
 - authorize user over 18 y.o. to make CRUD operations
 - admin user can view all users and reservations
-- all records are presented as paginated results
-- records can be filtered (enter a string to search for in the email, firstName, lastName)
+- all records are presented as paginated results (by default 10 items per page, max 50)
+- records can be filtered 
+    - `reservations` by id, email and start date
+    - `users` by email, first and last name
 
 ## Prerequisites
 
