@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Domain;
+using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Services;
 
@@ -18,7 +19,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResult<ReservationDto>>> GetReservations([FromQuery] QueryParameters queryParameters)
+        public async Task<ActionResult<PagedResult<ReservationDto>>> GetReservations([FromQuery] ReservationQueryParameters queryParameters)
         {
             var reservations = await reservationService.GetAllReservationsAsync(queryParameters);
             return Ok(reservations);

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
+using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
 
@@ -29,7 +30,7 @@ namespace ReservationAPI.Services
             return userDto;
         }
 
-        public async Task<PagedResult<UserDto>> GetAllUsersAsync(QueryParameters queryParameters)
+        public async Task<PagedResult<UserDto>> GetAllUsersAsync(UserQueryParameters queryParameters)
         {
             var users = dataContext
                 .Users

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Domain;
+using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Services;
 
@@ -19,7 +20,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResult<UserDto>>> GetUsers([FromQuery] QueryParameters queryParameters)
+        public async Task<ActionResult<PagedResult<UserDto>>> GetUsers([FromQuery] UserQueryParameters queryParameters)
         {
             var users = await userService.GetAllUsersAsync(queryParameters);
             return Ok(users);

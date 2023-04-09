@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
+using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
 
@@ -18,7 +19,7 @@ namespace ReservationAPI.Services
             this.mapper = mapper;
         }
 
-        public async Task<PagedResult<ReservationDto>> GetAllReservationsAsync(QueryParameters queryParameters)
+        public async Task<PagedResult<ReservationDto>> GetAllReservationsAsync(ReservationQueryParameters queryParameters)
         {
             var reservations = from r in dataContext.Reservations
                    .Include(r => r.User)

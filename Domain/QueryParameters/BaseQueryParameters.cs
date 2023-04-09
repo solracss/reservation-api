@@ -1,9 +1,8 @@
-﻿namespace ReservationAPI.Domain
+﻿namespace ReservationAPI.Domain.QueryParameters
 {
-    public class QueryParameters
+    public class BaseQueryParameters : IBaseQueryParameters
     {
         public string SearchString { get; set; }
-        public DateTime StartDateParam { get; set; }
         public int PageNumber { get; set; } = 1;
 
         public int PageSize
@@ -14,7 +13,7 @@
             }
             set
             {
-                _pageSize = (value > maxPageSize) ? maxPageSize : value;
+                _pageSize = value > maxPageSize ? maxPageSize : value;
             }
         }
 
