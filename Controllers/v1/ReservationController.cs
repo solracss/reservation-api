@@ -42,5 +42,12 @@ namespace ReservationAPI.Controllers.v1
                 routeValues: new { id = reservationId },
                 null);
         }
+
+        [HttpPut("edit/{id}")]
+        public async Task<ActionResult> EditReservation([FromRoute] int id, [FromBody] EditReservationDto dto)
+        {
+            await reservationService.EditReservationDetailsAsync(id, dto);
+            return Ok();
+        }
     }
 }

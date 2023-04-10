@@ -71,5 +71,18 @@ namespace ReservationAPI.Services
 
             return reservation.Id;
         }
+
+        public async Task EditReservationDetailsAsync(int id, EditReservationDto dto)
+        {
+            var reservation = await dataContext
+                .Reservations
+                .FirstOrDefaultAsync(r => r.Id == id)
+                ?? throw new NotFoundException($"Resrvation with id {id} not found");
+
+            reservation.StartDate = dto.StartDate;
+            reservation.EndDate = dto.EndDate;
+
+            await dataContext.SaveChangesAsync();
+        }
     }
 }

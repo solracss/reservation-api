@@ -11,5 +11,7 @@ namespace ReservationAPI.Services
         Task<ReservationDto> GetReservationAsync(int id);
 
         Task<int> CreateReservationAsync(CreateReservationDto dto);
+
+        Task EditReservationDetailsAsync(int id, EditReservationDto dto);
     }
 }
