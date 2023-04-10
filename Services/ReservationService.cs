@@ -84,5 +84,16 @@ namespace ReservationAPI.Services
 
             await dataContext.SaveChangesAsync();
         }
+
+        public async Task DeleteReservationAsync(int id)
+        {
+            var reservation = await dataContext
+                .Reservations
+                .FirstOrDefaultAsync(r => r.Id == id)
+                ?? throw new NotFoundException($"Resrvation with id {id} not found");
+
+            dataContext.Reservations.Remove(reservation);
+            dataContext.SaveChanges();
+        }
     }
 }

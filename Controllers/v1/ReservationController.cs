@@ -49,5 +49,12 @@ namespace ReservationAPI.Controllers.v1
             await reservationService.EditReservationDetailsAsync(id, dto);
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteReservation([FromRoute] int id)
+        {
+            await reservationService.DeleteReservationAsync(id);
+            return NoContent();
+        }
     }
 }
