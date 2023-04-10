@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Status-InProgress-red) ![](https://img.shields.io/badge/version-1.0-Green)<br /><br />
+![](https://img.shields.io/badge/version-1.0-Green)<br /><br />
 
 # Reservation api
 
@@ -26,6 +26,9 @@ Main features:
 1. Clone this repository<br/>
    `git clone https://github.com/solracss/reservation-api.git`
 2. Run `ReservationAPI.sln`
+3. Set [environment variables](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows) in `appsettings.json` for 
+    - connection string to database
+    - jwt key
 
 ## Using project
 
@@ -61,6 +64,8 @@ Reservation Endpoints
     POST /api/reservations - Create a new reservation.
     PUT /api/reservations/{id} - Update reservation by ID.
     DELETE /api/reservations/{id} - Delete reservation by ID.
+
+Full endpoints documentation available at `https://localhost:PORT_NUMBER/swagger/index.html`
 
 ## Tech Stack
 
