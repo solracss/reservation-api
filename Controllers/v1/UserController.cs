@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
@@ -10,6 +11,7 @@ namespace ReservationAPI.Controllers.v1
     [ApiController]
     [Route("api/v{version:apiVersion}/users")]
     [ApiVersion("1.0")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IUserService userService;

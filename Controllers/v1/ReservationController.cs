@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NpgsqlTypes;
 using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
@@ -10,6 +11,7 @@ namespace ReservationAPI.Controllers.v1
     [ApiController]
     [Route("api/v{version:apiVersion}/reservation")]
     [ApiVersion("1.0")]
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly IReservationService reservationService;
@@ -20,6 +22,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PagedResult<ReservationDto>>> GetReservations([FromQuery] ReservationQueryParameters queryParameters)
         {
             var reservations = await reservationService.GetAllReservationsAsync(queryParameters);
