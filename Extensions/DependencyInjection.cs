@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IReservationService, ReservationService>();
+        services.AddScoped<IHttpContextService, HttpContextService>();
 
         return services;
     }
