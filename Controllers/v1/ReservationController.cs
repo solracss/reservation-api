@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NpgsqlTypes;
 using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
@@ -25,11 +26,21 @@ namespace ReservationAPI.Controllers.v1
             return Ok(reservations);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetReservation")]
         public async Task<ActionResult<ReservationDto>> GetReservation(int id)
         {
             var reservation = await reservationService.GetReservationAsync(id);
             return Ok(reservation);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateReservation([FromBody] CreateReservationDto dto)
+        {
+            var reservationId = await reservationService.CreateReservationAsync(dto);
+            return CreatedAtRoute(
+                routeName: "GetReservation",
+                routeValues: new { id = reservationId },
+                null);
         }
     }
 }

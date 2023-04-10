@@ -13,11 +13,13 @@ namespace ReservationAPI.Services
     {
         private readonly DataContext dataContext;
         private readonly IMapper mapper;
+        private readonly IHttpContextService httpContextService;
 
-        public ReservationService(DataContext dataContext, IMapper mapper)
+        public ReservationService(DataContext dataContext, IMapper mapper, IHttpContextService httpContextService)
         {
             this.dataContext = dataContext;
             this.mapper = mapper;
+            this.httpContextService = httpContextService;
         }
 
         public async Task<PagedResult<ReservationDto>> GetAllReservationsAsync(ReservationQueryParameters queryParameters)
@@ -57,6 +59,17 @@ namespace ReservationAPI.Services
 
             var reservationDto = mapper.Map<ReservationDto>(reservation);
             return reservationDto;
+        }
+
+        public async Task<int> CreateReservationAsync(CreateReservationDto dto)
+        {
+            var userId = httpContextService.GetUserId();
+            var reservation = mapper.Map<Reservation>(dto);
+            reservation.UserId = userId;
+            await dataContext.Reservations.AddAsync(reservation);
+            await dataContext.SaveChangesAsync();
+
+            return reservation.Id;
         }
     }
 }

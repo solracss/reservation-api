@@ -22,8 +22,9 @@ namespace ReservationAPI.Profiles
                 .ForMember(dto => dto.UserFirstName, email =>
                 email.MapFrom(u => u.User.FirstName))
                 .ForMember(dto => dto.UserLastName, email =>
-                email.MapFrom(u => u.User.LastName))
-            ;
+                email.MapFrom(u => u.User.LastName));
+
+            CreateMap<CreateReservationDto, Reservation>();
         }
     }
 }

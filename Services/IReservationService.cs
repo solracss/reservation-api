@@ -9,5 +9,7 @@ namespace ReservationAPI.Services
         Task<PagedResult<ReservationDto>> GetAllReservationsAsync(ReservationQueryParameters queryParameters);
 
         Task<ReservationDto> GetReservationAsync(int id);
+
+        Task<int> CreateReservationAsync(CreateReservationDto dto);
     }
 }
