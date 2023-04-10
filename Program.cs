@@ -1,3 +1,4 @@
+using ReservationAPI.Authorization;
 using ReservationAPI.Extensions;
 using ReservationAPI.Middleware;
 
@@ -15,6 +16,7 @@ namespace ReservationAPI
                 .RegisterDatabase(builder.Configuration)
                 .RegisterServices()
                 .AddInfrastructure()
+                .AddCustomAuthorization()
                 .ApiVersionConfiguration()
                 .AddApiDocumentation();
 

@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReservationAPI.Authorization;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
 using ReservationAPI.Dtos;
@@ -30,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IHttpContextService, HttpContextService>();
+        services.AddScoped<IAuthorizationHandler, AgeRequirementHandler>();
 
         return services;
     }
@@ -43,7 +46,18 @@ public static class DependencyInjection
         services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
         services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
+        return services;
+    }
 
+    public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Over 18", policy =>
+            {
+                policy.Requirements.Add(new AgeRequirement(18));
+            });
+        });
         return services;
     }
 }

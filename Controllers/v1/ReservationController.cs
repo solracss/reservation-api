@@ -11,7 +11,7 @@ namespace ReservationAPI.Controllers.v1
     [ApiController]
     [Route("api/v{version:apiVersion}/reservation")]
     [ApiVersion("1.0")]
-    [Authorize]
+    [Authorize(Policy = "Over 18")]
     public class ReservationController : Controller
     {
         private readonly IReservationService reservationService;
