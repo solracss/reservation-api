@@ -8,7 +8,7 @@ Main features:
 
 - register new user
 - authenticate user using jwt token
-- authorize user over 18 y.o. to make CRUD operations
+- authorize logged user over 18 y.o. to make CRUD operations
 - admin user can view all users and reservations
 - all records are presented as paginated results (by default 10 items per page, max 50)
 - records can be filtered 
