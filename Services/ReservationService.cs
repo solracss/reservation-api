@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
@@ -21,14 +22,14 @@ namespace ReservationAPI.Services
 
         public async Task<PagedResult<ReservationDto>> GetAllReservationsAsync(ReservationQueryParameters queryParameters)
         {
-            var reservations = from r in dataContext.Reservations
-                   .Include(r => r.User)
-                               where (string.IsNullOrEmpty(queryParameters.SearchString)
+            var reservations = dataContext.Reservations
+                   .Include(r => r.User).Where(r =>
+                               (string.IsNullOrEmpty(queryParameters.SearchString)
                                             || r.UserId.ToString() == queryParameters.SearchString
                                             || r.User.Email.Contains(queryParameters.SearchString))
                                       && (queryParameters.StartDateParam == new DateTime(0001, 01, 01)
-                                            || r.StartDate >= queryParameters.StartDateParam)
-                               select r;
+                                            || r.StartDate >= queryParameters.StartDateParam))
+                   .ProjectTo<ReservationDto>(mapper.ConfigurationProvider);
 
             if (!reservations.Any())
             {
@@ -36,12 +37,11 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = reservations.Count();
-            var reservationsResultForPage = await PagedResult<Reservation>
+            var pagedResult = await PagedResult<ReservationDto>
                 .GetItemsForPage(reservations, queryParameters);
-            var reservationDto = mapper.Map<List<ReservationDto>>(reservationsResultForPage);
 
             return new PagedResult<ReservationDto>(
-                reservationDto,
+                pagedResult,
                 totalItemsCount,
                 queryParameters.PageSize,
                 queryParameters.PageNumber);

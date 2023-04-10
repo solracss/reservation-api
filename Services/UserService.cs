@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Data;
 using ReservationAPI.Domain;
@@ -38,8 +39,8 @@ namespace ReservationAPI.Services
                 .Where(u => queryParameters.SearchString == null
                 || (u.FirstName.ToLower().Contains(queryParameters.SearchString.ToLower()))
                 || (u.LastName.ToLower().Contains(queryParameters.SearchString.ToLower()))
-                || (u.Email.ToLower().Contains(queryParameters.SearchString.ToLower()))
-                );
+                || (u.Email.ToLower().Contains(queryParameters.SearchString.ToLower())))
+                .ProjectTo<UserDto>(mapper.ConfigurationProvider);
 
             if (!users.Any())
             {
@@ -47,10 +48,14 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = users.Count();
-            var usersResultForPage = await PagedResult<User>.GetItemsForPage(users, queryParameters);
-            var userDtos = mapper.Map<List<UserDto>>(usersResultForPage);
+            var pagedResult = await PagedResult<UserDto>
+                .GetItemsForPage(users, queryParameters);
 
-            return new PagedResult<UserDto>(userDtos, totalItemsCount, queryParameters.PageSize, queryParameters.PageNumber);
+            return new PagedResult<UserDto>(
+                pagedResult,
+                totalItemsCount,
+                queryParameters.PageSize,
+                queryParameters.PageNumber);
         }
     }
 }
