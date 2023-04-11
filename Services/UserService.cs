@@ -6,6 +6,7 @@ using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
+using System.Linq.Expressions;
 
 namespace ReservationAPI.Services
 {
@@ -39,8 +40,27 @@ namespace ReservationAPI.Services
                 .Where(u => queryParameters.SearchString == null
                 || (u.FirstName.ToLower().Contains(queryParameters.SearchString.ToLower()))
                 || (u.LastName.ToLower().Contains(queryParameters.SearchString.ToLower()))
-                || (u.Email.ToLower().Contains(queryParameters.SearchString.ToLower())))
-                .ProjectTo<UserDto>(mapper.ConfigurationProvider);
+                || (u.Email.ToLower().Contains(queryParameters.SearchString.ToLower())));
+
+            if (string.IsNullOrEmpty(queryParameters.SortBy))
+            {
+                users.OrderBy(u => u.Id);
+            }
+            else
+            {
+                var columnSelector = new Dictionary<string, Expression<Func<User, object>>>
+                {
+                    {nameof(User.Id), x => x.Id},
+                    {nameof(User.Email), x => x.Email},
+                    {nameof(User.DateOfBirth), x => x.DateOfBirth}
+                };
+
+                var selectedColumn = columnSelector[queryParameters.SortBy];
+
+                users = queryParameters.SortDirection == SortDirection.ASC
+                    ? users.OrderBy(selectedColumn)
+                    : users.OrderByDescending(selectedColumn);
+            }
 
             if (!users.Any())
             {
@@ -48,8 +68,9 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = users.Count();
+            var usersDtos = users.ProjectTo<UserDto>(mapper.ConfigurationProvider);
             var pagedResult = await PagedResult<UserDto>
-                .GetItemsForPage(users, queryParameters);
+                .GetItemsForPage(usersDtos, queryParameters);
 
             return new PagedResult<UserDto>(
                 pagedResult,
