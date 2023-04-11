@@ -14,6 +14,9 @@ Main features:
 - records can be filtered 
     - `reservations` by id, email and start date
     - `users` by email, first and last name
+- and sorted
+    - `reservations` by id, email and start date
+    - `users` by id, email and date of birth
 
 ## Prerequisites
 
