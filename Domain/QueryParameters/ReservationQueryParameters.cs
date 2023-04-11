@@ -2,6 +2,6 @@
 {
     public class ReservationQueryParameters : BaseQueryParameters
     {
-        public DateTime StartDateParam { get; set; }
+        public DateTime StartDate { get; set; }
     }
 }

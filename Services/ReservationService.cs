@@ -6,6 +6,7 @@ using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
+using System.Linq.Expressions;
 
 namespace ReservationAPI.Services
 {
@@ -29,9 +30,28 @@ namespace ReservationAPI.Services
                                (string.IsNullOrEmpty(queryParameters.SearchString)
                                             || r.UserId.ToString() == queryParameters.SearchString
                                             || r.User.Email.Contains(queryParameters.SearchString))
-                                      && (queryParameters.StartDateParam == new DateTime(0001, 01, 01)
-                                            || r.StartDate >= queryParameters.StartDateParam))
-                   .ProjectTo<ReservationDto>(mapper.ConfigurationProvider);
+                                      && (queryParameters.StartDate == new DateTime(0001, 01, 01)
+                                            || r.StartDate >= queryParameters.StartDate));
+
+            if (string.IsNullOrEmpty(queryParameters.SortBy))
+            {
+                reservations.OrderBy(u => u.Id);
+            }
+            else
+            {
+                var columnSelector = new Dictionary<string, Expression<Func<Reservation, object>>>
+                {
+                    {nameof(Reservation.Id), x => x.Id},
+                    {nameof(Reservation.User.Email), x => x.User.Email},
+                    {nameof(Reservation.StartDate), x => x.StartDate}
+                };
+
+                var selectedColumn = columnSelector[queryParameters.SortBy];
+
+                reservations = queryParameters.SortDirection == SortDirection.ASC
+                    ? reservations.OrderBy(selectedColumn)
+                    : reservations.OrderByDescending(selectedColumn);
+            }
 
             if (!reservations.Any())
             {
@@ -39,8 +59,9 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = reservations.Count();
+            var usersDtos = reservations.ProjectTo<ReservationDto>(mapper.ConfigurationProvider);
             var pagedResult = await PagedResult<ReservationDto>
-                .GetItemsForPage(reservations, queryParameters);
+                .GetItemsForPage(usersDtos, queryParameters);
 
             return new PagedResult<ReservationDto>(
                 pagedResult,
