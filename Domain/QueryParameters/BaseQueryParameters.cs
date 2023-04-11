@@ -17,6 +17,9 @@
             }
         }
 
+        public string SortBy { get; set; }
+        public SortDirection SortDirection { get; set; }
+
         private int _pageSize = 10;
         private const int maxPageSize = 50;
     }
