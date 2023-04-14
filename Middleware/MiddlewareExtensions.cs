@@ -2,9 +2,9 @@
 {
     public static class MiddlewareExtensions
     {
-        public static IApplicationBuilder UseErrorHandlindMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<ErrorHandlindMiddleware>();
+            return builder.UseMiddleware<ErrorHandlingMiddleware>();
         }
     }
 }

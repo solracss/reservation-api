@@ -33,7 +33,7 @@ namespace ReservationAPI
 
             app
                 .ConfigureSwagger()
-                .UseErrorHandlindMiddleware()
+                .UseErrorHandlingMiddleware()
                 .UseAuthentication()
                 .UseHttpsRedirection()
                 .UseAuthorization();

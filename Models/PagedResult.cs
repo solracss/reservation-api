@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ReservationAPI.Domain.QueryParameters;
-
-namespace ReservationAPI.Domain
+﻿namespace ReservationAPI.Domain
 {
     public class PagedResult<T>
     {
@@ -18,14 +15,6 @@ namespace ReservationAPI.Domain
             ItemsFrom = pageSize * (pageNumber - 1) + 1;
             ItemsTo = pageSize + ItemsFrom - 1;
             TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-        }
-
-        public static async Task<List<T>> GetItemsForPage(IQueryable<T> query, IBaseQueryParameters queryParameters)
-        {
-            return await query
-                .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
-                .Take(queryParameters.PageSize)
-                .ToListAsync();
         }
     }
 }

@@ -40,7 +40,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddScoped<ErrorHandlindMiddleware>();
+        services.AddScoped<ErrorHandlingMiddleware>();
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
         services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
