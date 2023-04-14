@@ -16,6 +16,15 @@ namespace ReservationAPI.Services
         private readonly IMapper mapper;
         private readonly IHttpContextService httpContextService;
 
+        private static readonly Dictionary<string,
+            Expression<Func<Reservation, object>>> columnSelector =
+            new()
+            {
+                    {nameof(Reservation.Id), x => x.Id},
+                    {nameof(Reservation.User.Email), x => x.User.Email},
+                    {nameof(Reservation.StartDate), x => x.StartDate}
+            };
+
         public ReservationService(DataContext dataContext, IMapper mapper, IHttpContextService httpContextService)
         {
             this.dataContext = dataContext;
@@ -39,15 +48,7 @@ namespace ReservationAPI.Services
             }
             else
             {
-                var columnSelector = new Dictionary<string, Expression<Func<Reservation, object>>>
-                {
-                    {nameof(Reservation.Id), x => x.Id},
-                    {nameof(Reservation.User.Email), x => x.User.Email},
-                    {nameof(Reservation.StartDate), x => x.StartDate}
-                };
-
                 var selectedColumn = columnSelector[queryParameters.SortBy];
-
                 reservations = queryParameters.SortDirection == SortDirection.ASC
                     ? reservations.OrderBy(selectedColumn)
                     : reservations.OrderByDescending(selectedColumn);
