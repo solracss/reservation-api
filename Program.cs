@@ -22,11 +22,13 @@ namespace ReservationAPI
 
             var app = builder.Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
-            using (var scope = app.Services.CreateScope())
+            if (app.Environment.IsDevelopment())
             {
-                var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-                seeder.SeedDataContext();
+                using (var scope = app.Services.CreateScope())
+                {
+                    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+                    seeder.SeedDataContext();
+                }
             }
 
             app
