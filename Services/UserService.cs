@@ -6,6 +6,7 @@ using ReservationAPI.Domain;
 using ReservationAPI.Domain.QueryParameters;
 using ReservationAPI.Dtos;
 using ReservationAPI.Exceptions;
+using ReservationAPI.Models.QueryParameters;
 using System.Linq.Expressions;
 
 namespace ReservationAPI.Services
@@ -68,9 +69,7 @@ namespace ReservationAPI.Services
             }
 
             var totalItemsCount = users.Count();
-            var usersDtos = users.ProjectTo<UserDto>(mapper.ConfigurationProvider);
-            var pagedResult = await PagedResult<UserDto>
-                .GetItemsForPage(usersDtos, queryParameters);
+            var pagedResult = await users.GetItemsForPage(queryParameters).ProjectTo<UserDto>(mapper.ConfigurationProvider).ToListAsync();
 
             return new PagedResult<UserDto>(
                 pagedResult,
