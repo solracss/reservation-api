@@ -30,12 +30,8 @@ namespace ReservationAPI.Services
         {
             var user = await dataContext.Users
                  .Include(u => u.Role)
-                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
-
-            if (user == null)
-            {
-                throw new BadRequestException("Invalid username or password");
-            }
+                 .FirstOrDefaultAsync(u => u.Email == dto.Email)
+                 ?? throw new BadRequestException("Invalid username or password");
 
             var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
