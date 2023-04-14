@@ -63,7 +63,7 @@ namespace ReservationAPI.Services
                     : users.OrderByDescending(selectedColumn);
             }
 
-            if (!users.Any())
+            if (!await users.AnyAsync())
             {
                 throw new NotFoundException("No users in database");
             }

@@ -55,13 +55,14 @@ namespace ReservationAPI.Services
                     : reservations.OrderByDescending(selectedColumn);
             }
 
-            if (!reservations.Any())
+            if (!await reservations.AnyAsync())
             {
                 throw new NotFoundException("No reservations matching search request");
             }
 
             var totalItemsCount = reservations.Count();
-            var pagedResult = await reservations.GetItemsForPage(queryParameters).ProjectTo<ReservationDto>(mapper.ConfigurationProvider).ToListAsync();
+            var pagedResult = await reservations.GetItemsForPage(queryParameters)
+                .ProjectTo<ReservationDto>(mapper.ConfigurationProvider).ToListAsync();
 
             return new PagedResult<ReservationDto>(
                 pagedResult,
@@ -114,7 +115,7 @@ namespace ReservationAPI.Services
                 ?? throw new NotFoundException($"Resrvation with id {id} not found");
 
             dataContext.Reservations.Remove(reservation);
-            dataContext.SaveChanges();
+            await dataContext.SaveChangesAsync();
         }
     }
 }
