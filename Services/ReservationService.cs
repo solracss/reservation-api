@@ -73,13 +73,13 @@ namespace ReservationAPI.Services
 
         public async Task<ReservationDto> GetReservationAsync(int id)
         {
-            var reservation = await dataContext
+            var reservationDto = await dataContext
                 .Reservations
                 .Include(r => r.User)
-                .FirstOrDefaultAsync(r => r.Id == id)
+                .Where(r => r.Id == id)
+                .ProjectTo<ReservationDto>(mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync()
                 ?? throw new NotFoundException($"Resrvation with id {id} not found");
-
-            var reservationDto = mapper.Map<ReservationDto>(reservation);
             return reservationDto;
         }
 
