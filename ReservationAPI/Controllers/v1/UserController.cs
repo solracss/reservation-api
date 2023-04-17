@@ -21,6 +21,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PagedResult<UserDto>>> GetUsers([FromQuery] UserQueryParameters queryParameters)
         {
             var users = await userService.GetAllUsersAsync(queryParameters);
@@ -28,6 +30,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             var user = await userService.GetUserAsync(id);

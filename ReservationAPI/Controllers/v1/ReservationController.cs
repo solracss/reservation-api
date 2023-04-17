@@ -21,6 +21,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PagedResult<ReservationDto>>> GetReservations([FromQuery] ReservationQueryParameters queryParameters)
         {
             var reservations = await reservationService.GetAllReservationsAsync(queryParameters);
@@ -28,6 +30,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet("{id}", Name = "GetReservation")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReservationDto>> GetReservation(int id)
         {
             var reservation = await reservationService.GetReservationAsync(id);
@@ -35,6 +39,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult> CreateReservation([FromBody] CreateReservationDto dto)
         {
             var reservationId = await reservationService.CreateReservationAsync(dto);
@@ -45,6 +50,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpPut("edit/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> EditReservation([FromRoute] int id, [FromBody] EditReservationDto dto)
         {
             await reservationService.EditReservationDetailsAsync(id, dto);
@@ -52,6 +59,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteReservation([FromRoute] int id)
         {
             await reservationService.DeleteReservationAsync(id);

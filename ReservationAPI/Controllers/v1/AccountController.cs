@@ -25,6 +25,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             var validationResult = await registerValidator.ValidateAsync(dto);
@@ -39,6 +41,8 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
             var validationResult = loginValidator.Validate(dto);
