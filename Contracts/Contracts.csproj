@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Dto\CreateReservationDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+    <Compile Update="Dto\EditReservationDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+    <Compile Update="Dto\LoginDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+    <Compile Update="Dto\RegisterUserDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+    <Compile Update="Dto\ReservationDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+    <Compile Update="Dto\UserDto.cs">
+      <CustomToolNamespace></CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
+</Project>
