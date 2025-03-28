@@ -13,14 +13,19 @@ namespace Application.Middleware
             }
             catch (NotFoundException notFoundException)
             {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(notFoundException.Message);
+                await HandleExceptionAsync(context, StatusCodes.Status404NotFound, notFoundException.Message);
             }
             catch (BadRequestException badRequestException)
             {
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync(badRequestException.Message);
+                await HandleExceptionAsync(context, StatusCodes.Status400BadRequest, badRequestException.Message);
             }
+        }
+
+        private async Task HandleExceptionAsync(HttpContext context, int statusCode, string message)
+        {
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync( new { error = message });
         }
     }
 }
