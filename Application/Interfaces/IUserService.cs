@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task<PagedResult<UserDto>> GetAllUsersAsync(UserQueryParameters queryParameters);
 
         Task<UserDto> GetUserAsync(int id);
+        Task<UserDto> GetCurrentUserAsync();
     }
 }

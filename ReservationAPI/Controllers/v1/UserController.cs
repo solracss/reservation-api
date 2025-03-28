@@ -20,6 +20,15 @@ namespace ReservationAPI.Controllers.v1
             this.userService = userService;
         }
 
+        [HttpGet("me")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await userService.GetCurrentUserAsync();
+            return Ok(user);
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
