@@ -1,4 +1,5 @@
 ﻿using Contracts.Dto;
+using Domain.Entities;
 
 namespace ReservationAPI.Dto
 {
@@ -10,5 +11,6 @@ namespace ReservationAPI.Dto
         public string LastName { get; set; }
         public ICollection<ReservationDto> Reservations { get; set; }
         public string DateOfBirth { get; set; }
+        public Role Role { get; set; }
     }
 }
