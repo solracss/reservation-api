@@ -37,7 +37,7 @@ namespace ReservationAPI.Controllers.v1
                 return BadRequest(new { Errors = errorList });
             }
             await accountService.RegisterUserAsync(dto);
-            return Ok();
+            return Ok(new { status = "Processed" });
         }
 
         [HttpPost("login")]
