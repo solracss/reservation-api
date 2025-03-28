@@ -17,6 +17,7 @@ namespace Infrastructure
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDataSeeder, DataSeeder>();
 
             return services;
         }
