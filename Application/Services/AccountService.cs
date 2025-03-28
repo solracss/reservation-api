@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Contracts.Dto;
+using Domain.Entities;
 
 namespace Application.Services
 {
@@ -20,9 +21,9 @@ namespace Application.Services
             return jwtTokenGenerator.GenerateToken(user);
         }
 
-        public async Task RegisterUserAsync(RegisterUserDto dto)
+        public async Task<User> RegisterUserAsync(RegisterUserDto dto)
         {
-            await accountRepository.RegisterUserAsync(dto);
+            return await accountRepository.RegisterUserAsync(dto);
         }
     }
 }

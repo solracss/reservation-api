@@ -7,7 +7,7 @@ namespace Application.Interfaces
     {
         Task<User> VerifyIfUserExistAsync(LoginDto dto);
 
-        Task RegisterUserAsync(RegisterUserDto dto);
+        Task<User> RegisterUserAsync(RegisterUserDto dto);
 
         Task<bool> EmailAlreadyTaken(string email);
     }

@@ -1,4 +1,5 @@
 ﻿using Contracts.Dto;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
@@ -6,6 +7,6 @@ namespace Application.Interfaces
     {
         Task<string> LoginAsync(LoginDto dto);
 
-        Task RegisterUserAsync(RegisterUserDto dto);
+        Task<User> RegisterUserAsync(RegisterUserDto dto);
     }
 }

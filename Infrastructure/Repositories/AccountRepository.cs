@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
             return taken;
         }
 
-        public async Task RegisterUserAsync(RegisterUserDto dto)
+        public async Task<User> RegisterUserAsync(RegisterUserDto dto)
         {
             var newUser = new User()
             {
@@ -40,6 +40,7 @@ namespace Infrastructure.Repositories
             newUser.PasswordHash = hashedPassword;
             await dataContext.Users.AddAsync(newUser);
             await dataContext.SaveChangesAsync();
+            return newUser;
         }
 
         public async Task<User> VerifyIfUserExistAsync(LoginDto dto)
