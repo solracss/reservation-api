@@ -19,6 +19,11 @@ namespace ReservationAPI.Installers
                 {
                     policy.Requirements.Add(new AgeRequirement(18));
                 });
+
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireClaim("userRole", "admin");
+                });
             });
         }
     }

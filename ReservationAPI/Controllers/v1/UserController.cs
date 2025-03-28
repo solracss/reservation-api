@@ -9,8 +9,7 @@ namespace ReservationAPI.Controllers.v1
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/users")]
-    [ApiVersion("1.0")]
-    [Authorize(Roles = "Admin")]
+    [ApiVersion("1.0")]    
     public class UserController : Controller
     {
         private readonly IUserService userService;
@@ -30,6 +29,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PagedResult<UserDto>>> GetUsers([FromQuery] UserQueryParameters queryParameters)
@@ -39,6 +39,7 @@ namespace ReservationAPI.Controllers.v1
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<UserDto>> GetUser(int id)
