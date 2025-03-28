@@ -56,7 +56,10 @@ namespace ReservationAPI.Controllers.v1
                 return BadRequest(ModelState);
             }
             string token = await accountService.LoginAsync(dto);
-            return Ok(token);
+            return Ok(new
+            {
+                token
+            });
         }
     }
 }
